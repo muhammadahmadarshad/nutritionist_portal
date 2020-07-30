@@ -1,0 +1,23 @@
+
+
+.signup-box{
+
+    width:70%;
+    position: relative;
+    float:center;
+    padding: 4px;
+    overflow: hidden;
+    margin: auto;
+
+}
+@media only screen and (max-width: 600px){
+
+.signup-box{
+
+width: 100%;
+
+
+}
+
+
+}

@@ -1,0 +1,249 @@
+.App {
+  display: flex;
+ 
+  width: 100%
+  
+  
+}
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+  overflow-y: scroll
+}
+body {
+font-family: "Open Sans", sans-serif;
+line-height: 1.25;
+}
+
+table, td {
+  border: 0 solid white;
+  border-collapse: collapse;
+  }
+  th, td {
+  padding: 5px;
+  text-align: left;}
+
+@media screen and (max-width: 768px) {
+table {
+  border: 0;
+}
+
+table caption {
+  font-size: 1.3em;
+}
+
+table thead {
+  border: none;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+table tr {
+  border-bottom: 3px solid #ddd;
+  display: block;
+  margin-bottom: .625em;
+}
+
+table td {
+  border-bottom: 1px solid #ddd;
+  display: block;
+  font-size: .8em;
+  text-align: right;
+}
+
+table td::before {
+  /*
+  * aria-label has no advantage, it won't be read inside a table
+  content: attr(aria-label);
+  */
+  content: attr(data-label);
+  float: left;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+table td:last-child {
+  border-bottom: 0;
+}
+}
+
+
+
+/* ---------------------------------------------------
+  SIDEBAR STYLE
+----------------------------------------------------- */
+.sidebar {
+min-width: 250px;
+max-width: 250px;
+background:#042330;
+color: #fff;
+margin-left: -255px;
+transition: all 0.5s;
+overflow: hidden;
+}
+
+.sidebar.is-open {
+margin-left: 0;
+transition: .5s;
+}
+
+
+.sidebar-header {
+background: #023347;
+}
+
+.sidebar-header h3{
+color: #fff;
+padding: 1em;
+}
+
+.sidebar ul p {
+  color: #fff;
+  padding: 5px;
+}
+
+.menu-open {
+background: #042330;
+}
+.sidebar .nav-item{
+
+padding: 0px;
+font-size: 15px;
+
+
+
+}
+
+
+.modal-dialog {
+position: absolute;
+top: 51%;
+left: 0%;
+transform: translate(0%, -52%) !important;
+}
+.sidebar .nav-item:hover {
+  color: #fff;
+  margin-left: 10px;
+  background: #023347;
+  transition: all  .5s;
+ 
+}
+
+.items-menu {
+color: #fff;
+background: #042330;
+}
+
+li a.dropdown-toggle::after {
+  display: inline-flex;
+  position: relative;
+  left: 5%;
+  top: 10%
+}
+
+.sidebar-header > span {
+  position: relative;
+  float: right;
+  margin: .5em;
+  font-size: 2rem;
+  cursor: pointer;
+  display: none;
+}
+.side-menu {
+height:calc(100vh - 100px);
+overflow-y: scroll;
+}
+
+.side-menu::-webkit-scrollbar {
+width: 10px;
+}
+
+.side-menu::-webkit-scrollbar-thumb {
+background:#023e58; 
+border-radius: 3px;
+}
+
+.side-menu::-webkit-scrollbar-thumb:hover {
+background: #076d96; 
+}
+
+/* ---------------------------------------------------
+  CONTENT STYLE
+----------------------------------------------------- */
+.content {
+padding: 5px;
+margin-left: auto;
+
+}
+
+.text-center{
+
+  text-align: center;
+}
+.card-text
+{
+overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}
+
+.card-title
+{
+
+overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}
+.card-subtitle
+{
+
+overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}
+
+.jumbotron
+{
+
+overflow: hidden;
+word-wrap: break-word; 
+}
+@media only screen and (max-width: 400px) {
+  body {
+    overflow:  scroll;
+    
+  }
+  
+  
+
+  .content.is-open {
+    margin-left: 100%;
+  }
+
+
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
+
+  .sidebar.is-open > .sidebar-header span{
+    display: unset;
+  }
+
+  li a.dropdown-toggle::after {
+      display: inline-block;
+      position: relative;
+      left: 68%;
+  }
+}

@@ -1,0 +1,49 @@
+body {}
+
+.box {
+    width: calc(100% -10px);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 4px;
+    overflow: hidden;
+}
+
+.box .text-design {
+    letter-spacing: 10px;
+}
+
+.box .btn {
+    width: 180px
+}
+
+.box .jumbotron {}
+
+.box .avatar {
+    color: black;
+    font-size: 140px;
+}
+
+.login-center {
+    width: 25rem;
+    height: 30rem;
+    text-align: center;
+    border-radius: 20px;
+    margin: auto;
+    float: center;
+}
+
+.btn-center {
+    margin: auto;
+}
+
+.btn {
+    width: fit-content;
+}
+
+.icon {
+    position: fixed;
+    left: 200px;
+}
