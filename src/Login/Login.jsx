@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Input,InputGroup,InputGroupAddon,InputGroupText} from 'reactstrap'
+import {Input,InputGroup,InputGroupAddon,InputGroupText, Spinner} from 'reactstrap'
 import {Link} from 'react-router-dom' 
 import './Login.css'
 import {useAuth} from '../auth'
@@ -8,6 +8,7 @@ export default function Login (props) {
 
  let [email,setEmail]=useState('')
  let [password,setPassword]=useState('')
+ const [loading,setLoading]=useState(false)
 let [error,setError]=useState({error:false,msg:""})
 
  const {dispatch}=useAuth()
@@ -31,15 +32,17 @@ let [error,setError]=useState({error:false,msg:""})
   const onLogin=(e)=>{
 
     e.preventDefault()
-
+    setLoading(true)
     axios({url:"http://localhost:5000/nutritionist/login",method:'post',data:{email,password}}).then((res)=>{
     console.log(res.data)
    dispatch({type:'set_token',payload:res.data.token})
-    localStorage.setItem('nutri-token',res.data.token)
+   setLoading(false) 
+   localStorage.setItem('nutri-token',res.data.token)
     props.history.push('/')
     }).catch(err=>{
       
       setError({error:true,msg:err.response.data.msg})
+      setLoading(false)
     })
 
 
@@ -84,7 +87,7 @@ let [error,setError]=useState({error:false,msg:""})
         </InputGroup>
         </div>
         <div className='mt-4 btn-center'> 
-        <Input type='submit' value='Login'  className='bg-success text-white'></Input>
+    <button type='submit'   className=' btn btn-success'>{loading?<Spinner/>:"Login"}</button>
         
        
         </div>

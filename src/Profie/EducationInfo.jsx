@@ -29,11 +29,11 @@ const EducationInfo=(props)=>{
                     </tr>
                     <tr>
                         <th>From</th>
-                        <td>{from_date.toString()}</td>
+                        <td>{`${from_date.date()}/${from_date.month()+1}/${from_date.year()}`}</td>
                     </tr>
                     <tr>
                         <th>To</th>
-                        <td>{to_date.toString()}</td>
+                        <td>{`${to_date.date()}/${to_date.month()+1}/${to_date.year()}`}</td>
                     </tr>
                     <tr>
                         <th>Type</th>

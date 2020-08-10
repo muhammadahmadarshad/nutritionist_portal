@@ -4,7 +4,7 @@ import NavBar from '../Navbar/navbar'
 import classNames from 'classnames'
 import Loading from '../Loading/Loading'
 import axios from 'axios'
-import {Table,Button} from 'reactstrap'
+import {Table,Button, Spinner} from 'reactstrap'
 import {useParams} from 'react-router-dom'
 import Paginate from './Favourite_paginate'
 import {Modal,ModalBody,ModalHeader,Form,Input} from 'reactstrap'
@@ -132,7 +132,7 @@ function AddMeal(props){
                     <div className='form-group'>
                         <Button className='btn btn-success btn-block' 
                         type= 'submit'
-                        >{loading?'Adding...':"Add"}</Button>
+                        >{loading?<Spinner/>:"Add"}</Button>
                     </div>
     {!err.err?<span className='text-success text-center'>{err.msg}</span>:<span className='text-danger text-center'>{err.msg}</span>
                     }

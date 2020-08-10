@@ -31,10 +31,7 @@ const AccountInfo=(props)=>{
                         <td>{fee} $</td>
                     </tr>
 
-                    <tr>
-                        <th>Earning</th>
-                        <td>{balance} $</td>
-                    </tr>
+       
 
                 </tbody>
             </Table>
