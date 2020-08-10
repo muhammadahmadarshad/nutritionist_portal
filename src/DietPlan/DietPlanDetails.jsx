@@ -6,7 +6,7 @@ import NavBar from '../Navbar/navbar';
 import Loading from '../Loading/Loading';
 import { useParams, Link } from 'react-router-dom';
 import Axios from 'axios';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import moment from 'moment'
   
 
@@ -163,6 +163,7 @@ else if(err){
             <div className="row">
                 <div className="col-md-12 col-12">
                   <Link className='btn btn-primary btn-block' to={`/diet_plan/${data._id}/1`}>Show Diet Plan</Link>
+                  <Link className='btn btn-info btn-block' to={`/diet_plan_performance/${data._id}`}>Check Performance</Link>
                 </div>
             </div>
             </div>

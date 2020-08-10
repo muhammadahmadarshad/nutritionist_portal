@@ -5,8 +5,8 @@ import Axios from 'axios'
 
 const SendResponse = (props) => {
 
-    let {modal,toggle,msg}=props
-    let [response,setresponse]=useState('')
+    let {modal,toggle,msg,}=props
+    let [response,setresponse]=useState(msg.response)
 let [resp,setResp]=useState({success:false,msg:''})
 function onchange(e){
 

@@ -6,7 +6,7 @@ import { useAuth } from "./auth";
 function PrivateRoute({ component: Component, ...rest }) {
   const {state} = useAuth();
     const {token}=state
-  
+ 
   return (
     <Route
       {...rest}

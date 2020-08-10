@@ -14,9 +14,6 @@ const Speciality = (props) => {
         setCategory({category:target.value})
     }
 
-    function onChangeCategory({target}){
-        setCategory({category:target.value})
-    }
     function onChangeSpecialities_Description({target}){
         setSpecialities_Description({specialities_description:target.value})
     }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter,Form,Input } from 'reactstrap';
+import {  Modal, ModalHeader, ModalBody,Form,Input, Spinner } from 'reactstrap';
 
 const MakeDietPlan = (props) => {
-    let {title,modal,toggle,start_date,onSubmit,duration,onChangeDuration,onChangeTitle,onChangeStartDate,data}= props
+    let {title,modal,toggle,start_date,onSubmit,duration,onChangeDuration,onChangeTitle,onChangeStartDate,data,loading}= props
 
     return (       
     <Modal backdrop='static' isOpen={modal} toggle={toggle}>
@@ -35,7 +35,7 @@ const MakeDietPlan = (props) => {
           <div className='form-group'>
               <div className='row'>
                   <div className='col-md-12'>
-                      <Input title='Make Diet Plan' className='btn btn-success btn-block' type='Submit'/>
+    <button title='Make Diet Plan' className='btn btn-success btn-block' type='submit'>{loading?<Spinner/>:"Submit"}</button>
                   <span></span>
                   </div>
               </div>

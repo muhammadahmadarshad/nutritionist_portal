@@ -2,7 +2,7 @@ import React,{useReducer} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-
+import '@material-ui/icons'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.css'
 import {reducer} from './reducer'

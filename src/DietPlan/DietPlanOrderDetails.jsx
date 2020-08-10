@@ -23,6 +23,7 @@ export default function DietPlanOrderDetails(props)  {
   const [title,setTitle]=React.useState({value:'',err:false,msg:"Required"})
   const [start_date,setStartDate]=React.useState({value:'',err:false,msg:""})
   const [duration,setDuration]=React.useState({value:'',err:false,msg:""})
+  const [saving,setSaving]=React.useState(false)
   function onChangeTitle(e){
     setTitle({value:e.target.value,err:false,msg:''})
 }
@@ -63,17 +64,19 @@ function onChangeDuration(e){
     e.preventDefault();
     
     let data1={start_date:new Date(start_date.value),title:title.value,duration:duration.value,client_id:data.order_by._id,order_id:data._id}
+    setSaving(true)
     Axios({url:'http://localhost:5000/diet_plan/nutri/make_diet_plan',
         method:'post',
         data:data1,
         headers:{'x-auth-token':localStorage.getItem('nutri-token')}        
     }).then(res=>{
             getData()
+            setSaving(false)
             modaltoggle()
     }).catch(err=>{
         
        let {data}=err.response
-
+        setSaving(false)
         if (!data['path']){
 
 
@@ -129,7 +132,7 @@ function onChangeDuration(e){
     
     <NavBar toggle={toggle} isOpen={isOpen }/>
      <div >
-          <h1 className='text-danger text-center'>No Orders Available</h1>
+          <h1 className='text-danger text-center'>No Order Available</h1>
      </div>
 
     </div>         
@@ -150,7 +153,7 @@ function onChangeDuration(e){
         
         <div className='container'>
 
-            <MakeDietPlan modal={modal} onSubmit={onSubmit} toggle={modaltoggle} title={title} loading={loading} start_date={start_date} data={data} duration={duration} onChangeDuration={onChangeDuration} onChangeTitle={onChangeTitle} onChangeStartDate={onChangeStartDate}/>
+            <MakeDietPlan loading={saving} modal={modal} onSubmit={onSubmit} toggle={modaltoggle} title={title}  start_date={start_date} data={data} duration={duration} onChangeDuration={onChangeDuration} onChangeTitle={onChangeTitle} onChangeStartDate={onChangeStartDate}/>
             <h3 className='text-primary' style={{textAlign:"center"}}>Order Details</h3>
             <hr/>
             <div className='m-auto w-75 jumbotron'>

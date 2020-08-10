@@ -49,9 +49,12 @@ let [error,setError]=useState({error:false,msg:""})
 
   
     return (
-      <div className='box' >
+      <div className='layout'>
+
+        <h1 className='text-center text-dark mt-5'>Nutritionist Portal</h1>
+      <div  className='box' >
       <h2 className='text-center text-design text-dark mb-2 text-shadow'>Health Portal</h2>
-      <div className='jumbotron  login-center'>
+      <div  className='jumbotron  login-center'>
       
       <i className='fa  avatar fa-user'></i>
        
@@ -86,7 +89,7 @@ let [error,setError]=useState({error:false,msg:""})
        
         </div>
         <div className='text-center mt-4'>
-        <Link className='text-primary' to='/forgotPassword'>Forgot Password?</Link>
+        <Link className='text-primary' to='/forget_password'>Forgot Password?</Link>
         
         </div>
         <div className='text-center mt-4'>
@@ -94,6 +97,7 @@ let [error,setError]=useState({error:false,msg:""})
         </div>
         </form>
         
+      </div>
       </div>
       </div>
     );

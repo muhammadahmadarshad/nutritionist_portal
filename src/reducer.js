@@ -6,7 +6,7 @@ export const reducer = (state, action) => {
   
     else if(action.type==='remove_token')
     {
-      return {...state,token:""}
+      return {...state,token:action.payload}
     }
     else if(action.type==='inc')
     {

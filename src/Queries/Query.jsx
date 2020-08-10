@@ -6,9 +6,10 @@ import Sidebar from '../Sidebar/Sidebar';
 import NavBar from '../Navbar/navbar';
 import Loading from '../Loading/Loading';
 import Axios from 'axios';
-import { Table } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import moment from 'moment'
+import {  Button } from 'reactstrap';
+import {  useParams } from 'react-router-dom';
+
+import SendResponse from './SendResponse';
 
   
 
@@ -17,30 +18,38 @@ export default function Query(props)  {
 
   const [isOpen,setOpen]=useState(false)
   const [loading,setLoading]=useState(true)
-  const [data,setData]=useState([])
+  const [data,setData]=useState({})
   const [err,setError]=useState(false) 
+  const {id}=useParams()
+  const [modal,setModal]=useState(false)
+  
+  
   let toggle=()=>{
       setOpen(!isOpen)
    }
 
+let getData=()=>{
+    setLoading(true)
+    Axios({method:"GET",url:'http://localhost:5000/query/message_by_id/'+id,headers:{
+        'x-auth-token':localStorage.getItem('nutri-token')
+    }}).then(res=>{
+        console.log(res.data)
+        setData(res.data)
+        setLoading(false)
+        
+        setError(false)
 
-   useEffect(()=>{
-        setLoading(true)
-        Axios({method:'get',url:'http://localhost:5000/query/get_all_conversation',headers:{'x-auth-token':localStorage.getItem('nutri-token')}})
-        .then(res=>{
-            setData(res.data)
-            setLoading(false)
-           
-            setError(false)
-        })
-        .catch(()=>{
-            setError(true)
-            setLoading(false)
+    })
+    .catch(err=>{
 
 
-        })
+        setError(true)
+        setLoading(false)
+    })
 
-   },[])
+
+   }
+   useEffect(getData,[id])
 
 if(loading){
 
@@ -80,7 +89,8 @@ else if(err){
 )
 
 
-}  
+} else {
+ 
     return (
         <div className="App wrapper content">  
        
@@ -92,42 +102,32 @@ else if(err){
        <NavBar toggle={toggle} isOpen={isOpen }/>
        <div className='container'>
 
-            <h1 className='text-center'>Conversations</h1>
+       <h3 className='text-center  text-primary'>Message</h3>
+
+        <div className='jumbotron'>
+        
+            <p  className='p-2'>{data.query}
+            </p>
+    <span className='text-right'><strong>From: </strong>  {data.author_id.first_name +" "+data.author_id.last_name}</span>
+        </div>
+
+        
+        <div >
+               
+                <SendResponse modal={modal} msg={data} getData={getData} name={data.author_id.first_name +" "+data.author_id.last_name} toggle={()=>{setModal(!modal)}}></SendResponse>
+                {data.response?<div className='jumbotron'>
+                    <h3 className='text-center text-primary'>Response</h3>
+                    <p className='p-2'>{data.response}</p>
+                    <Button className='mt-4' color='primary' block outline onClick={()=>{setModal(!modal)}}>Update</Button>
+                    </div>:
+                    <div className='m-auto  w-50'>
+                        <Button color='primary' block outline onClick={()=>{setModal(!modal)}}>Send Response</Button>
+                    </div>
+                }
+            
 
 
-        <Table striped>
-
-            <thead className='bg-primary text-white'>
-                <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                    <th>Updated At</th>
-                    <th>Queries</th>
-                </tr>
-            </thead>
-
-
-            <tbody>
-                {data.map(item=>{
-                    let {_id,client}=item
-                    
-                    return(
-                        <tr key={_id}>
-                            <td>{client.first_name}</td>
-                            <td>{client.last_name}</td>
-                             <td>{client.email}</td>
-                            <td>{moment(item.updatedAt).calendar()}</td>
-                             <td><Link className='btn btn-success' to={`/conversation/${_id}`}>Show</Link></td>
-                        </tr>
-
-                    )
-                })}
-                
-            </tbody>
-        </Table>
-
-
+        </div>
 
        </div>
 
@@ -138,4 +138,4 @@ else if(err){
 
     );
   
-}
+}}

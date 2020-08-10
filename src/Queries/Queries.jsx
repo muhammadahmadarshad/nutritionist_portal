@@ -6,10 +6,12 @@ import Sidebar from '../Sidebar/Sidebar';
 import NavBar from '../Navbar/navbar';
 import Loading from '../Loading/Loading';
 import Axios from 'axios';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 
 import moment from 'moment'
-import SendResponse from './SendResponse';
+
+import { useParams, Link } from 'react-router-dom';
+import Paginate from './paginate';
 
   
 
@@ -19,14 +21,12 @@ export default function Queries(props)  {
   const [isOpen,setOpen]=useState(false)
   const [loading,setLoading]=useState(true)
   const [data,setData]=useState([])
-  const [msg,setMessageId]=useState("")
+
   const [err,setError]=useState(false) 
-  let [modal,setModal]=useState(false)
-  let modalToggle=()=>{
 
-    setModal(!modal)
 
-  }
+  let {page}=useParams()
+
   let toggle=()=>{
       setOpen(!isOpen)
    }
@@ -34,7 +34,7 @@ export default function Queries(props)  {
 let getData=()=>{
     setLoading(true)
  
-    Axios({method:'get',url:'http://localhost:5000/query/get_all_messages/'+props.match.params.id,headers:{'x-auth-token':localStorage.getItem('token')}})
+    Axios({method:'get',url:'http://localhost:5000/query/get_all_messages/'+page,headers:{'x-auth-token':localStorage.getItem('nutri-token')}})
     .then(res=>{
         console.log(res.data)
         
@@ -51,7 +51,7 @@ let getData=()=>{
     })
 
 }
-   useEffect(getData,[])
+   useEffect(getData,[page])
 
 if(loading){
 
@@ -105,32 +105,29 @@ else if(err){
 
             <h1 className='text-center'>Query</h1>
 
-        <SendResponse getData={getData} msg={msg} name={`${data.messages[0].author_id.first_name} ${data.messages[0].author_id.last_name}`} modal={modal} toggle={modalToggle}/>
-
         <Table striped>
 
             <thead className='bg-primary text-white'>
                 <tr>
-                    <th>Message</th>
+                    <th>Sender</th>
                     <th>Time</th>
-                    <th>Response</th>
+                    <th></th>
                 </tr>
             </thead>
 
 
             <tbody>
                 {data.messages.map(item=>{
-                    let {response,query,createdAt,_id}=item
-                       
+                    let {createdAt,_id,author_id}=item
+                    let {first_name,last_name}=author_id
                     return(
                         <tr key={_id}>
-                            <td>{query}</td>
-                            <td>{moment(createdAt).calendar()}</td>
-                    <td>{response?<span onClick={()=>{
-                                 setMessageId(item);
-                                 modalToggle()}}>{response}</span>:<Button onClick={()=>{
-                                 setMessageId(item);
-                                 modalToggle()}} color='primary'>Send Response</Button>}</td>
+                            
+                            <td data-label='Sender'>{`${first_name} ${last_name}`}</td>
+                            <td data-label='Time'>{moment(createdAt).calendar()}</td>
+                            <td><Link to={`/query_detail/${_id}`} className='btn btn-primary'>
+                                Show
+                            </Link></td>
                             
                         </tr>
 
@@ -140,6 +137,9 @@ else if(err){
             </tbody>
         </Table>
 
+                <Paginate total_results={data.total_results} history={props.history} match={props.match}>
+
+                </Paginate>
 
 
        </div>

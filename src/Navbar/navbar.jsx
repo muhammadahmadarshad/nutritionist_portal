@@ -23,7 +23,7 @@ const NavBar = (props) => {
         <Nav className="ml-auto"  >
          
           <UncontrolledDropdown >
-
+          
           {state.value}
           <DropdownToggle nav >
             <i className='fa fa-user fa-lg text-white'></i>
@@ -32,11 +32,14 @@ const NavBar = (props) => {
             <DropdownItem>
               <Link className='text-dark' to='/account'>Account</Link>
             </DropdownItem>
+            <DropdownItem>
+              <Link className='text-dark' to='/change_password'>Change Password</Link>
+            </DropdownItem>
             <DropdownItem className='text-dark' onClick={()=>{
               
-              localStorage.removeItem('admin_token')
+              localStorage.removeItem('nutri-token')
               
-              dispatch({type:'remove_token'})}}>
+              dispatch({type:'remove_token',payload:null})}}>
               
              Signout <i className='fa fa-sign-out fa-lg'></i>
             

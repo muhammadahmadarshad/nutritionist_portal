@@ -3,7 +3,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import NavBar from '../Navbar/navbar'
 import classNames from 'classnames'
 import moment from 'moment'
-import {Form,Input,FormFeedback} from 'reactstrap'
+import {Form,Input,FormFeedback, Spinner} from 'reactstrap'
 import Axios from 'axios';
   
 
@@ -15,7 +15,9 @@ export default function AddEducation(props)  {
   const [formData,setFormData]= React.useState({title:"",from:'',to:"",type:"",institute:''})
   const [touched,settouched]= React.useState({title:false,from:false,to:false,type:false,institute:false})
   const [response,setResponse]=React.useState({success:false,msg:''})
-   const onChange=(e)=>{
+  const [loading,setLoading]=React.useState(false) 
+  
+  const onChange=(e)=>{
 
     let {name,value}= e.target
 
@@ -42,15 +44,17 @@ export default function AddEducation(props)  {
     to.minutes(0).hours(0).seconds(0)
     let from =moment(formData.from)
     from.minutes(0).hours(0).seconds(0)
+    setLoading(true)
     Axios({method:'post',data:{...formData,from,to},headers:{'x-auth-token':localStorage.getItem('nutri-token')},url:'http://localhost:5000/nutritionist/addEducation'})
     .then(res=>{
 
         setResponse(res.data)
-    })
+      setLoading(false)
+      })
     .catch(err=>{
 
-        setResponse(err.response.data)
-
+     setResponse(err.response.data?err.response.data:{success:false,msg:"Network Error"})
+      setLoading(false)
     })
   }
 
@@ -85,7 +89,7 @@ function   validate({title, to, type, from,institute}) {
     }
     if (touched.from && from==='')
       errors.from = "from is required.";
-    else if (touched.from && to_date.isBefore(from_date) || to_date.isSame(from_date))
+    else if (touched.from && ( to_date.isBefore(from_date) || to_date.isSame(from_date)))
      { 
          
         errors.from = `from date should be less than ${to_date.toDate()}`;
@@ -177,7 +181,7 @@ function   validate({title, to, type, from,institute}) {
                     </div>
                 </div>
                 <div className="row mt-3">
-                  <div className='col-sm-12'><button type="submit" className="btn btn-success btn-md btn-block">Add Education</button> 
+                  <div className='col-sm-12'><button type="submit" className="btn btn-success btn-md btn-block">{loading?<Spinner/>:'Add Education'}</button> 
                 </div>
                 </div>
 

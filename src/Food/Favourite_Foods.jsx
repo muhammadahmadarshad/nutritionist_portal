@@ -10,7 +10,7 @@ import Paginate from './Favourite_paginate'
 import {Modal,ModalBody,ModalHeader,Form,Input} from 'reactstrap'
 import FavouriteFoodItem from './Favourite_Food_Item'
 function AddMeal(props){
-    const {toggle,modal,err,setErr,clientList}=props
+    const {toggle,modal,err,setErr,clientList,food}=props
     const [time_to_eat,setTime]= React.useState({value:'',err:false,msg:''})
     const [meal,setMeal] = React.useState({value:"",err:false,msg:""})
     const [loading,setLoading]= React.useState(false)
@@ -31,7 +31,7 @@ function AddMeal(props){
     const onSubmit=(e)=>{
         e.preventDefault()
         let data={
-            food:modal.food,
+            food,
             time_to_eat:time_to_eat.value,
             meal:meal.value,
             client:client.value
@@ -48,8 +48,10 @@ function AddMeal(props){
         .then(res=>{
             setErr({msg:res.data.message,err:false})
             setLoading(false)
+           
         })
         .catch(err=>{
+          
             let {data}=err.response
             setLoading(false)
             if(data.path!==undefined){
@@ -89,12 +91,13 @@ function AddMeal(props){
                                 Select Client
                             </option>
                             {
-                                clientList.map(({owner_id})=>{
-
+                                clientList.map((plan)=>{
+                                    let {owner_id}=plan
                                     return(
 
                                         <option value={owner_id._id}>
                                             {owner_id.first_name+" "+owner_id.last_name}
+                                            ({owner_id.email})
                                         </option>
                                     )
                                 })
@@ -149,9 +152,11 @@ export default function Favourite_Food(props){
     const [loading,setLoading]= React.useState(true)
     const [foods,setFood] = React.useState([])
     const [modal, setModal] =React.useState({open:false,food:''});
+    const [food, setFoods] =React.useState('');
     const [client,setClient]=React.useState([])
     const AddMealFormModal = (id) => {
-        setModal({...modal,open:!modal.open,food:id})
+        setFoods(id)
+        setModal({open:!modal.open})
         setErr({err:false,msg:''})
     
     
@@ -165,9 +170,9 @@ export default function Favourite_Food(props){
      }
 
 const AddToMeal=(id)=>{
-
+console.log(id)
 AddMealFormModal(id)
-//toggleModal()
+toggleModal()
 
 }
 
@@ -217,7 +222,7 @@ axios({
     <div className={classNames('content container-fluid',{'is-open':isOpen})}>
     <NavBar toggle={toggle} isOpen={isOpen }/>
      <div className='container-fluid'>
-        <AddMeal err={err} clientList={client} setErr={setErr} modal={modal} toggle={toggleModal}/>
+        <AddMeal err={err} food={food} setFoods={setFoods} clientList={client} setErr={setErr} modal={modal} toggle={toggleModal}/>
      {!loading?<div>
         {foods.Foods.saved_food.length>0?
         <div>

@@ -71,7 +71,7 @@ const Education = (props) => {
         }
         if (touched.from && from==='')
           errors.from = "from is required.";
-        else if (touched.from && to_date.isBefore(from_date) || to_date.isSame(from_date))
+        else if (touched.from && (to_date.isBefore(from_date) || to_date.isSame(from_date)))
          { 
              
             errors.from = `from date should be less than ${to_date.toDate()}`;
