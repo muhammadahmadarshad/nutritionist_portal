@@ -30,9 +30,6 @@ const NavBar = (props) => {
           </DropdownToggle>
           <DropdownMenu right className='mt-3 text-center'>
             <DropdownItem>
-              <Link className='text-dark' to='/account'>Account</Link>
-            </DropdownItem>
-            <DropdownItem>
               <Link className='text-dark' to='/change_password'>Change Password</Link>
             </DropdownItem>
             <DropdownItem className='text-dark' onClick={()=>{
